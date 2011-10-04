@@ -1,0 +1,10 @@
+<package project="Mer:Trunk:Base" name="cups">
+  <title>Common Unix Printing System</title>
+  <description>The Common UNIX Printing System provides a portable printing layer for 
+UNIXÂ® operating systems. It has been developed by Easy Software Products 
+to promote a standard printing solution for all UNIX vendors and users. 
+CUPS provides the System V and Berkeley command-line interfaces. 
+
+</description>
+  <url>http://www.cups.org/</url>
+</package>

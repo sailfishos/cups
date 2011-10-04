@@ -1,0 +1,109 @@
+* Sat Sep 03 2011 Carsten Munk <carsten@maemo.org> - 1.4.4
+- Drop avahi, krb5 dependancies
+
+* Wed Jun 29 2011 Chris Ferron <chris.e.ferron@linux.intel.com> - 1.4.4
+-  package should not require xinetd
+
+* Mon Jun 27 2011 Chris Ferron <chris.e.ferron@linux.intel.com> - 1.4.4
+- PACKAGE CLEANUP - Removed unnecessary Obsoletes LPRng as there is no longer a package in MeeGo that provides or Requires it. 
+
+* Fri May 27 2011 Chris Ferron <chris.e.ferron@linux.intel.com> - 1.4.4
+- Removed init.d files and directory from spec file, as it such 
+  functionality is obsoleted by systemd. 
+
+* Wed Apr 13 2011 Yang Chengwei <chengwei.yang@intel.com> - 1.4.4
+- Fixed BMC#12059 (cupsd bound on public interface).
+
+* Tue Dec 07 2010 Ling Yue <ling.yue@intel.com> - 1.4.4
+- Apply cups-CVE-2010-2941.patch for BMC#9852.
+
+* Sun Sep 05 2010 Anas Nashif <nashif@linux.intel.com> - 1.4.4
+- Fixed dependencies, cups-libs should not require cups
+- Remove dependency on kerberos and ldap
+- Remove alternative system, we have no other way for printing
+  beside cups
+- Various syntax fixes and spec cleanups
+
+* Fri Jul 16 2010 Ling Yue <ling.yue@intel.com> - 1.4.4
+- Remove "--initscript" in the %post script for cups-xinetd
+
+* Wed Jul 14 2010 Ling Yue <ling.yue@intel.com> - 1.4.4
+- Modified cups-xinetd.patch for v1.4.4 and apply again
+
+* Fri Jul 09 2010 Ling Yue <ling.yue@intel.com> - 1.4.4
+- Add cups-str3518.patch to fix BMC#3438 (CVE-2010-2432)
+
+* Wed Jun 30 2010 Ling Yue <ling.yue@intel.com> - 1.4.4
+- Rebase to Fedora 14's cups 1.4.4 for:
+  - new printers supporting
+  - many bug fixes (including security) and enhancements
+
+  With the following MeeGo optimizations as before:
+  - LSPP support removed
+  - php support removed
+  - portreserve support removed
+
+* Fri Apr 16 2010 Zhu Yanhai <yanhai.zhu@linux.intel.com> - 1.4.2
+- Add cups-str3482 to fix BMO94(CVE-2010-0393).
+
+* Fri Apr 2 2010 Auke Kok <auke-jan.h.kok@intel.com> - 1.4.2
+- Don't start cupsd by default (again). (MB#363)
+
+* Sat Mar 27 2010 Yan Li <yan.i.li@intel.com> - 1.4.2
+- Cleaned up all LSPP, portreserve related instructions
+- cups-str3200.patch is not needed since it's already in upstream
+
+* Fri Mar 26 2010 Anas Nashif <anas.nashif@intel.com> - 1.4.2
+- Remove Epoch
+
+* Wed Mar 10 2010 Zhu Yanhai <yanhai.zhu@linux.intel.com> - 1.4.2
+- Add cups-str3200.patch to fix CVE-2009-3553 (MB#8133)
+
+* Thu Mar  4 2010 Yan Li <yan.i.li@intel.com> - 1.4.2
+- Changelog clean up
+- Rebase to Fedora 12's cups 1.4.2 for:
+  - udev supporting
+  - new printers supporting
+  - many security bug fixes
+
+  With the following MeeGo optimizations:
+  - LSPP support removed
+  - php support removed
+  - xinetd support removed (upstream)
+  - portreserve support removed
+
+* Fri Feb 12 2010 Anas Nashif <anas.nashif@intel.com> - 1.3.10
+- Fixed directory ownership
+
+* Mon Nov 16 2009 Passion Zhao <passion.zhao@intel.com> - 1.3.10
+- Update the patch for CVE-2009-2820 because of regression 
+  patch-1.3v2.patch => cups-str3367-str3401.patch
+
+* Wed Oct 28 2009 Passion Zhao <passion.zhao@intel.com> - 1.3.10
+- Add patch-1.3v2.patch from vendorsec, emargo until Oct 28
+
+* Wed May 06 2009 Anas Nashif <anas.nashif@intel.com> 1.3.10
+- Do not start on boot
+
+* Mon Apr 27 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.10
+- Upgrade to 1.3.10, many bug fixings including security fixes
+- Port xinetd patch back to 1.3.10
+- Remove cups-php package creation
+
+* Tue Apr 21 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.9
+- Fixed hole of CVE-2009-0163
+
+* Tue Mar 10 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.9
+- start cupsd on demand via xinetd (bug #996)
+
+* Sun Mar 01 2009 Anas Nashif <anas.nashif@intel.com> 1.3.9
+- Do not start as a service, need an alternative solution (bug #996)
+
+* Wed Feb 11 2009 Yin Kangkai <kangkai.yin@intel.com> 1.3.9
+- Fix Source0 tag in spec file
+
+* Wed Dec 24 2008 Anas Nashif <anas.nashif@intel.com> 1.3.9
+- Do not require portserve
+
+* Fri Dec 19 2008 Anas Nashif <anas.nashif@intel.com> 1.3.9
+- Initial import into Moblin
