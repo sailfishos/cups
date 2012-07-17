@@ -1,6 +1,7 @@
---- cups-1.2.3/cups-config.in.multilib	2006-08-03 01:54:38.000000000 +0100
-+++ cups-1.2.3/cups-config.in	2006-08-30 15:47:35.000000000 +0100
-@@ -30,8 +30,10 @@
+diff -up cups-1.5b1/cups-config.in.multilib cups-1.5b1/cups-config.in
+--- cups-1.5b1/cups-config.in.multilib	2010-06-16 02:48:25.000000000 +0200
++++ cups-1.5b1/cups-config.in	2011-05-23 17:33:31.000000000 +0200
+@@ -22,8 +22,10 @@ prefix=@prefix@
  exec_prefix=@exec_prefix@
  bindir=@bindir@
  includedir=@includedir@

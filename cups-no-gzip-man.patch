@@ -1,6 +1,6 @@
-diff -up cups-1.4b2-svn8404/config-scripts/cups-manpages.m4.no-gzip-man cups-1.4b2-svn8404/config-scripts/cups-manpages.m4
---- cups-1.4b2-svn8404/config-scripts/cups-manpages.m4.no-gzip-man	2009-01-16 08:58:42.000000000 +0000
-+++ cups-1.4b2-svn8404/config-scripts/cups-manpages.m4	2009-03-05 11:11:12.000000000 +0000
+diff -up cups-1.5b1/config-scripts/cups-manpages.m4.no-gzip-man cups-1.5b1/config-scripts/cups-manpages.m4
+--- cups-1.5b1/config-scripts/cups-manpages.m4.no-gzip-man	2011-05-12 07:21:56.000000000 +0200
++++ cups-1.5b1/config-scripts/cups-manpages.m4	2011-05-23 17:25:50.000000000 +0200
 @@ -69,10 +69,10 @@ case "$uname" in
  		;;
  	Linux* | GNU* | Darwin*)

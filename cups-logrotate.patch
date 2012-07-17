@@ -1,7 +1,7 @@
-diff -up cups-1.3.5/scheduler/log.c.logrotate cups-1.3.5/scheduler/log.c
---- cups-1.3.5/scheduler/log.c.logrotate	2008-02-14 12:21:25.000000000 +0000
-+++ cups-1.3.5/scheduler/log.c	2008-02-14 12:24:16.000000000 +0000
-@@ -29,6 +29,9 @@
+diff -up cups-1.5b1/scheduler/log.c.logrotate cups-1.5b1/scheduler/log.c
+--- cups-1.5b1/scheduler/log.c.logrotate	2011-05-14 01:04:16.000000000 +0200
++++ cups-1.5b1/scheduler/log.c	2011-05-24 15:47:20.000000000 +0200
+@@ -32,6 +32,9 @@
  #include "cupsd.h"
  #include <stdarg.h>
  #include <syslog.h>
@@ -11,7 +11,7 @@ diff -up cups-1.3.5/scheduler/log.c.logrotate cups-1.3.5/scheduler/log.c
  
  
  /*
-@@ -467,12 +470,10 @@ check_log_file(cups_file_t **lf,	/* IO -
+@@ -71,12 +74,10 @@ cupsdCheckLogFile(cups_file_t **lf,	/* I
      return (1);
  
   /*
@@ -26,7 +26,7 @@ diff -up cups-1.3.5/scheduler/log.c.logrotate cups-1.3.5/scheduler/log.c
    {
     /*
      * Handle format strings...
-@@ -565,6 +566,34 @@ check_log_file(cups_file_t **lf,	/* IO -
+@@ -186,6 +187,34 @@ cupsdCheckLogFile(cups_file_t **lf,	/* I
    }
  
   /*

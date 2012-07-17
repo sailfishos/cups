@@ -1,6 +1,6 @@
-diff -up cups-1.4b1/backend/usb-unix.c.usb-paperout cups-1.4b1/backend/usb-unix.c
---- cups-1.4b1/backend/usb-unix.c.usb-paperout	2008-11-12 09:30:03.000000000 +0000
-+++ cups-1.4b1/backend/usb-unix.c	2008-11-12 09:30:03.000000000 +0000
+diff -up cups-1.5b1/backend/usb-unix.c.usb-paperout cups-1.5b1/backend/usb-unix.c
+--- cups-1.5b1/backend/usb-unix.c.usb-paperout	2011-05-24 15:51:39.000000000 +0200
++++ cups-1.5b1/backend/usb-unix.c	2011-05-24 15:51:39.000000000 +0200
 @@ -30,6 +30,11 @@
  
  #include <sys/select.h>
@@ -13,7 +13,7 @@ diff -up cups-1.4b1/backend/usb-unix.c.usb-paperout cups-1.4b1/backend/usb-unix.
  
  /*
   * Local functions...
-@@ -324,7 +329,19 @@ open_device(const char *uri,		/* I - Dev
+@@ -334,7 +339,19 @@ open_device(const char *uri,		/* I - Dev
    if (!strncmp(uri, "usb:/dev/", 9))
  #ifdef __linux
    {
@@ -34,7 +34,7 @@ diff -up cups-1.4b1/backend/usb-unix.c.usb-paperout cups-1.4b1/backend/usb-unix.
    }
    else if (!strncmp(uri, "usb://", 6))
    {
-@@ -390,7 +407,14 @@ open_device(const char *uri,		/* I - Dev
+@@ -400,7 +417,14 @@ open_device(const char *uri,		/* I - Dev
          if (!strcmp(uri, device_uri))
  	{
  	 /*

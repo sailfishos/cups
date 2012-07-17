@@ -1,6 +1,7 @@
---- cups-1.1.21/scheduler/main.c.pid	2004-09-24 11:29:05.073748138 +0100
-+++ cups-1.1.21/scheduler/main.c	2004-09-24 11:44:35.826446564 +0100
-@@ -349,6 +349,8 @@
+diff -up cups-1.5b1/scheduler/main.c.pid cups-1.5b1/scheduler/main.c
+--- cups-1.5b1/scheduler/main.c.pid	2011-05-18 22:44:16.000000000 +0200
++++ cups-1.5b1/scheduler/main.c	2011-05-23 18:01:20.000000000 +0200
+@@ -311,6 +311,8 @@ main(int  argc,				/* I - Number of comm
      * Setup signal handlers for the parent...
      */
  
@@ -9,7 +10,7 @@
  #ifdef HAVE_SIGSET /* Use System V signals over POSIX to avoid bugs */
      sigset(SIGUSR1, parent_handler);
      sigset(SIGCHLD, parent_handler);
-@@ -372,7 +374,7 @@
+@@ -334,7 +336,7 @@ main(int  argc,				/* I - Number of comm
      signal(SIGHUP, SIG_IGN);
  #endif /* HAVE_SIGSET */
  
@@ -18,7 +19,7 @@
      {
       /*
        * OK, wait for the child to startup and send us SIGUSR1 or to crash
-@@ -384,7 +386,15 @@
+@@ -346,7 +348,15 @@ main(int  argc,				/* I - Number of comm
          sleep(1);
  
        if (parent_signal == SIGUSR1)

@@ -1,8 +1,8 @@
-diff -up cups-1.4b1/berkeley/lpr.c.lpr-help cups-1.4b1/berkeley/lpr.c
---- cups-1.4b1/berkeley/lpr.c.lpr-help	2008-07-11 23:46:21.000000000 +0100
-+++ cups-1.4b1/berkeley/lpr.c	2008-11-11 16:20:32.000000000 +0000
-@@ -30,6 +30,31 @@
- #include <cups/i18n.h>
+diff -up cups-1.5b1/berkeley/lpr.c.lpr-help cups-1.5b1/berkeley/lpr.c
+--- cups-1.5b1/berkeley/lpr.c.lpr-help	2011-03-21 23:02:00.000000000 +0100
++++ cups-1.5b1/berkeley/lpr.c	2011-05-23 17:58:06.000000000 +0200
+@@ -24,6 +24,31 @@
+ #include <cups/cups-private.h>
  
  
 +static void
@@ -33,15 +33,7 @@ diff -up cups-1.4b1/berkeley/lpr.c.lpr-help cups-1.4b1/berkeley/lpr.c
  /*
   * 'main()' - Parse options and send files for printing.
   */
-@@ -54,7 +79,6 @@ main(int  argc,				/* I - Number of comm
-   int		deletefile;		/* Delete file after print? */
-   char		buffer[8192];		/* Copy buffer */
- 
--
-   _cupsSetLocale(argv);
- 
-   deletefile  = 0;
-@@ -282,6 +306,12 @@ main(int  argc,				/* I - Number of comm
+@@ -270,6 +294,12 @@ main(int  argc,				/* I - Number of comm
  	    break;
  
  	default :
@@ -52,5 +44,5 @@ diff -up cups-1.4b1/berkeley/lpr.c.lpr-help cups-1.4b1/berkeley/lpr.c
 +	    }
 +
  	    _cupsLangPrintf(stderr,
- 	                    _("%s: Error - unknown option \'%c\'!\n"),
- 			    argv[0], argv[i][1]);
+ 	                    _("%s: Error - unknown option \"%c\"."), argv[0],
+ 			    argv[i][1]);
