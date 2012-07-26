@@ -1,8 +1,5 @@
-%global use_alternatives 1
+%global use_alternatives 0
 %global lspp 0
-
-# This should be macro in systemd, remove when introduced there.
-%define _unitdir /lib/systemd/system
 
 # {_exec_prefix}/lib/cups is correct, even on x86_64.
 # It is not used for shared objects but for executables.
@@ -90,7 +87,8 @@ BuildRequires: libpng-devel
 BuildRequires: libtiff-devel
 BuildRequires: libusb1-devel
 BuildRequires: poppler-utils
-BuildRequires: systemd-devel
+# unitdir macro introduced in 187.
+BuildRequires: systemd-devel >= 187
 
 %if %lspp
 BuildRequires: libselinux-devel >= 1.23
@@ -304,7 +302,7 @@ chmod 700 $RPM_BUILD_ROOT%{cups_serverbin}/backend/serial
 
 rm -rf	$RPM_BUILD_ROOT%{_initddir} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/init.d \
-	$RPM_BUILD_ROOT%{_sysconfdir}/rc?.d
+	$RPM_BUILD_ROOT%{_sysconfdir}/rc*.d
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
 
 find $RPM_BUILD_ROOT%{_datadir}/cups/model -name "*.ppd" |xargs gzip -n9f
@@ -439,25 +437,6 @@ if [ $1 -ge 1 ]; then
 	/bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
 fi
 exit 0
-
-%triggerun -- %{name} < 1:1.5.0-22
-# This package is allowed to autostart; however, the upgrade trigger
-# in Fedora 16 final failed to actually do this.  Do it now as a
-# one-off fix for bug #748841.
-/bin/systemctl --no-reload enable %{name}.{service,socket,path} >/dev/null 2>&1 || :
-
-%triggerun -- %{name} < 1:1.5-0.9
-# Save the current service runlevel info
-# User must manually run systemd-sysv-convert --apply cups
-# to migrate them to systemd targets
-%{_bindir}/systemd-sysv-convert --save %{name} >/dev/null 2>&1 || :
-
-# This package is allowed to autostart:
-/bin/systemctl --no-reload enable %{name}.{service,socket,path} >/dev/null 2>&1 || :
-
-# Run these because the SysV package being removed won't do them
-/sbin/chkconfig --del cups >/dev/null 2>&1 || :
-/bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
 
 %triggerin -- samba-client
 ln -sf ../../../bin/smbspool %{cups_serverbin}/backend/smb || :
