@@ -1,3 +1,6 @@
+* Tue May 05 2015 Islam Amer <islam.amer@jollamobile.com> - 1.5.3
+- Some packaging fixes MER#966
+
 * Thu Jul 26 2012 Marko Saukko <marko.saukko@jollamobile.com> - 1.5.3
 - Disable alternatives as we don't use it
 - Remove the /etc/rc*.d dirs
@@ -45,8 +48,7 @@
 - Rebase to Fedora 14's cups 1.4.4 for:
   - new printers supporting
   - many bug fixes (including security) and enhancements
-
-  With the following MeeGo optimizations as before:
+  - With the following MeeGo optimizations as before:
   - LSPP support removed
   - php support removed
   - portreserve support removed
@@ -73,8 +75,7 @@
   - udev supporting
   - new printers supporting
   - many security bug fixes
-
-  With the following MeeGo optimizations:
+  - With the following MeeGo optimizations:
   - LSPP support removed
   - php support removed
   - xinetd support removed (upstream)
@@ -90,28 +91,28 @@
 * Wed Oct 28 2009 Passion Zhao <passion.zhao@intel.com> - 1.3.10
 - Add patch-1.3v2.patch from vendorsec, emargo until Oct 28
 
-* Wed May 06 2009 Anas Nashif <anas.nashif@intel.com> 1.3.10
+* Wed May 06 2009 Anas Nashif <anas.nashif@intel.com> - 1.3.10
 - Do not start on boot
 
-* Mon Apr 27 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.10
+* Mon Apr 27 2009 Peter Zhu <peter.j.zhu@intel.com> - 1.3.10
 - Upgrade to 1.3.10, many bug fixings including security fixes
 - Port xinetd patch back to 1.3.10
 - Remove cups-php package creation
 
-* Tue Apr 21 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.9
+* Tue Apr 21 2009 Peter Zhu <peter.j.zhu@intel.com> - 1.3.9
 - Fixed hole of CVE-2009-0163
 
-* Tue Mar 10 2009 Peter Zhu <peter.j.zhu@intel.com> 1.3.9
+* Tue Mar 10 2009 Peter Zhu <peter.j.zhu@intel.com> - 1.3.9
 - start cupsd on demand via xinetd (bug #996)
 
-* Sun Mar 01 2009 Anas Nashif <anas.nashif@intel.com> 1.3.9
+* Sun Mar 01 2009 Anas Nashif <anas.nashif@intel.com> - 1.3.9
 - Do not start as a service, need an alternative solution (bug #996)
 
-* Wed Feb 11 2009 Yin Kangkai <kangkai.yin@intel.com> 1.3.9
+* Wed Feb 11 2009 Yin Kangkai <kangkai.yin@intel.com> - 1.3.9
 - Fix Source0 tag in spec file
 
-* Wed Dec 24 2008 Anas Nashif <anas.nashif@intel.com> 1.3.9
+* Wed Dec 24 2008 Anas Nashif <anas.nashif@intel.com> - 1.3.9
 - Do not require portserve
 
-* Fri Dec 19 2008 Anas Nashif <anas.nashif@intel.com> 1.3.9
+* Fri Dec 19 2008 Anas Nashif <anas.nashif@intel.com> - 1.3.9
 - Initial import into Moblin

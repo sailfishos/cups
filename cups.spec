@@ -30,6 +30,7 @@ Source8: cups.cron
 Source9: textonly.filter
 Source10: textonly.ppd
 Source11: macros.cups
+Source12: cups.service
 Patch1: cups-no-gzip-man.patch
 Patch2: cups-system-auth.patch
 Patch3: cups-multilib.patch
