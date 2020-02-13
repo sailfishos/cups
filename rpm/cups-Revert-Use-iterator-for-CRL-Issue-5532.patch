@@ -1,0 +1,74 @@
+From b5122b3eabd2c45e7ba7404654cff94d56d75b98 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@jolla.com>
+Date: Thu, 13 Feb 2020 17:01:54 +0200
+Subject: [PATCH] Revert "Use iterator for CRL (Issue #5532)"
+
+This reverts commit 2a06fe63e619fcd82df2d697a8ecb965f260a38f.
+---
+ CHANGES.md        |  2 +-
+ cups/tls-gnutls.c | 20 +++++++++-----------
+ 2 files changed, 10 insertions(+), 12 deletions(-)
+
+diff --git a/CHANGES.md b/CHANGES.md
+index 5959407ea..2afefd685 100644
+--- a/CHANGES.md
++++ b/CHANGES.md
+@@ -146,7 +146,7 @@ Changes in CUPS v2.3b8
+ - Added a USB quirks rule for Xerox printers (Issue #5523)
+ - The scheduler's self-signed certificate did not include all of the alternate
+   names for the server when using GNU TLS (Issue #5525)
+-- Fixed compiler warnings with newer versions of GCC (Issue #5532, Issue #5533)
++- Fixed a compiler warning with newer versions of GCC (Issue #5533)
+ - Fixed some PPD caching and IPP Everywhere PPD accounting/password bugs
+   (Issue #5535)
+ - Fixed `PreserveJobHistory` bug with time values (Issue #5538)
+diff --git a/cups/tls-gnutls.c b/cups/tls-gnutls.c
+index 329cc0eb4..6add91493 100644
+--- a/cups/tls-gnutls.c
++++ b/cups/tls-gnutls.c
+@@ -398,8 +398,8 @@ httpCredentialsAreValidForName(
+ 
+     if (result)
+     {
+-      gnutls_x509_crl_iter_t iter = NULL;
+-					/* Iterator */
++      int		i,		/* Looping var */
++			count;		/* Number of revoked certificates */
+       unsigned char	cserial[1024],	/* Certificate serial number */
+ 			rserial[1024];	/* Revoked serial number */
+       size_t		cserial_size,	/* Size of cert serial number */
+@@ -407,24 +407,22 @@ httpCredentialsAreValidForName(
+ 
+       _cupsMutexLock(&tls_mutex);
+ 
+-      if (gnutls_x509_crl_get_crt_count(tls_crl) > 0)
++      count = gnutls_x509_crl_get_crt_count(tls_crl);
++
++      if (count > 0)
+       {
+         cserial_size = sizeof(cserial);
+         gnutls_x509_crt_get_serial(cert, cserial, &cserial_size);
+ 
+-	rserial_size = sizeof(rserial);
+-
+-        while (!gnutls_x509_crl_iter_crt_serial(tls_crl, &iter, rserial, &rserial_size, NULL))
+-        {
+-          if (cserial_size == rserial_size && !memcmp(cserial, rserial, rserial_size))
++        for (i = 0; i < count; i ++)
++	{
++	  rserial_size = sizeof(rserial);
++          if (!gnutls_x509_crl_get_crt_serial(tls_crl, (unsigned)i, rserial, &rserial_size, NULL) && cserial_size == rserial_size && !memcmp(cserial, rserial, rserial_size))
+ 	  {
+ 	    result = 0;
+ 	    break;
+ 	  }
+-
+-	  rserial_size = sizeof(rserial);
+ 	}
+-	gnutls_x509_crl_iter_deinit(iter);
+       }
+ 
+       _cupsMutexUnlock(&tls_mutex);
+-- 
+2.17.1
+
