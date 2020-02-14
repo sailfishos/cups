@@ -1,0 +1,3 @@
+[submodule "cups"]
+	path = cups
+	url = https://git.sailfishos.org/mirror/cups.git
