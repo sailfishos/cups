@@ -89,11 +89,9 @@ Patch100: cups-lspp.patch
 
 
 BuildRequires: pam-devel
-BuildRequires: pkgconfig
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: libacl-devel
 BuildRequires: pkgconfig(libusb-1.0)
-BuildRequires: systemd
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(dbus-1)
 
