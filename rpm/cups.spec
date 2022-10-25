@@ -9,18 +9,14 @@
 
 Summary: Common Unix Printing System
 Name: cups
-Version: 2.3.1
-Release: 1%{?dist}
+Version: 2.4.2
+Release: 1
 License: ASL 2.0 with exceptions for GPL2/LGPL2
-Url: http://www.cups.org/
+Url: https://github.com/sailfishos/cups
 Source: %{name}-%{version}.tar.bz2
 # Pixmap for desktop file
 Source1: cupsprinter.png
-# Logrotate configuration
-Source2: cups.logrotate
-# Backend for NCP protocol
-Source3: ncp.backend
-Source4: macros.cups
+Source2: macros.cups
 
 
 # PAM enablement, very old patch, not even git can track when or why
@@ -38,50 +34,29 @@ Patch3: cups-banners.patch
 Patch4: cups-no-export-ssllibs.patch
 # enables old uri usb:/dev/usb/lp0 - leave it here for users of old printers
 Patch5: cups-direct-usb.patch
-# fix for redhat dbus spooler - adding new dbus functions to backend/ipp.c
-# -> initialize dbus connection and sending dbus broadcast about job queued
-# on remote queue with QueueChanged type for PRINTER_CHANGED, JOB_STATE_CHANGED
-# and PRINTER_STATE_CHANGED events 
-Patch6: cups-eggcups.patch
 # when system workload is high, timeout for cups-driverd can be reached -
 # increase the timeout
-Patch7: cups-driverd-timeout.patch
-# cupsd implement its own logrotate, but when MaxLogSize 0 is used, logrotated
-# takes care of it
-Patch8: cups-logrotate.patch
+Patch6: cups-driverd-timeout.patch
 # usb backend didn't get any notification about out-of-paper because of kernel 
-Patch9: cups-usb-paperout.patch
+Patch7: cups-usb-paperout.patch
 # uri compatibility with old Fedoras
-Patch10: cups-uri-compat.patch
-# fixing snmp oid for hp printer - upstream doesn't want to support too much
-# snmp backend, because it's deprecated
-Patch11: cups-hp-deviceid-oid.patch
-# same as HP OID
-Patch12: cups-ricoh-deviceid-oid.patch
-# change to notify type, because when it fails to start, it gives a error
-# message + renaming org.cups.cupsd names, because we have cups units in
-# in older Fedoras
-Patch13: cups-systemd-socket.patch
+Patch8: cups-uri-compat.patch
 # use IP_FREEBIND, because cupsd cannot bind to not yet existing IP address
 # by default
-Patch14: cups-freebind.patch
+Patch9: cups-freebind.patch
 # add support of multifile
-Patch15: cups-ipp-multifile.patch
+Patch10: cups-ipp-multifile.patch
 # prolongs web ui timeout
-Patch16: cups-web-devices-timeout.patch
-# needs to be set to Yes to avoid race conditions
-Patch17: cups-synconclose.patch
+Patch11: cups-web-devices-timeout.patch
 # failover backend for implementing failover functionality
 # TODO: move it to the cups-filters upstream
-Patch19: cups-failover-backend.patch
+Patch12: cups-failover-backend.patch
 
-# reported upstream
-# adds logs when job fails due bad conversion
-Patch20: cups-filter-debug.patch
 # add device id for dymo printer
-Patch21: cups-dymo-deviceid.patch
+Patch13: cups-dymo-deviceid.patch
 
-Patch22: cups-Revert-Use-iterator-for-CRL-Issue-5532.patch
+# Fix build in Sailfish OS
+Patch14: cups-Revert-Use-iterator-for-CRL-Issue-5532.patch
 
 # selinux and audit enablement for CUPS - needs work and CUPS upstream wants
 # to have these features implemented their way in the future
@@ -200,51 +175,33 @@ to CUPS daemon. This solution will substitute printer drivers and raw queues in 
 # Allow file-based usb device URIs.
 %patch5 -p1 -b .direct-usb
 # Increase driverd timeout to 70s to accommodate foomatic (bug #744715).
-%patch7 -p1 -b .driverd-timeout
-# Re-open the log if it has been logrotated under us.
-%patch8 -p1 -b .logrotate
+%patch6 -p1 -b .driverd-timeout
 # Support for errno==ENOSPACE-based USB paper-out reporting.
-%patch9 -p1 -b .usb-paperout
+%patch7 -p1 -b .usb-paperout
 # Allow the usb backend to understand old-style URI formats.
-%patch10 -p1 -b .uri-compat
-# Add an SNMP query for HP's device ID OID (STR #3552).
-%patch11 -p1 -b .hp-deviceid-oid
-# Add an SNMP query for Ricoh's device ID OID (STR #3552).
-%patch12 -p1 -b .ricoh-deviceid-oid
-# Make cups.service Type=notify (bug #1088918).
-%patch13 -p1 -b .systemd-socket
+%patch8 -p1 -b .uri-compat
 # Use IP_FREEBIND socket option when binding listening sockets (bug #970809).
-%patch14 -p1 -b .freebind
+%patch9 -p1 -b .freebind
 # Fixes for jobs with multiple files and multiple formats.
-%patch15 -p1 -b .ipp-multifile
+%patch10 -p1 -b .ipp-multifile
 # Increase web interface get-devices timeout to 10s (bug #996664).
-%patch16 -p1 -b .web-devices-timeout
-# Set the default for SyncOnClose to Yes.
-%patch17 -p1 -b .synconclose
+%patch11 -p1 -b .web-devices-timeout
 # Add failover backend (bug #1689209)
-%patch19 -p1 -b .failover
+%patch12 -p1 -b .failover
+# Added IEEE 1284 Device ID for a Dymo device (bug #747866).
+%patch13 -p1 -b .dymo-deviceid
+# Revert Use iterator for CRL Issue 5532
+%patch14 -p1 -b .Revert-Use-iterator-for-CRL-Issue-5532.patch
 
 %if %{lspp}
 # LSPP support.
 %patch100 -p1 -b .lspp
 %endif
 
-# Log extra debugging information if no filters are available.
-%patch20 -p1 -b .filter-debug
-# Added IEEE 1284 Device ID for a Dymo device (bug #747866).
-%patch21 -p1 -b .dymo-deviceid
-# Revert Use iterator for CRL Issue 5532
-%patch22 -p1 -b .Revert-Use-iterator-for-CRL-Issue-5532.patch
-
-#### UPSTREAMED PATCHES ####
-
-# removed dbus patch - seems breaking things
-# Fix implementation of com.redhat.PrinterSpooler D-Bus object.
-#%%patch6 -p1 -b .eggcups
-
-# if cupsd is set to log into /var/log/cups, then 'MaxLogSize 0' needs to be
-# in cupsd.conf to disable cupsd logrotate functionality and use logrotated
-sed -i -e '1iMaxLogSize 0' conf/cupsd.conf.in
+# Log to the system journal by default (bug #1078781, bug #1519331).
+sed -i -e 's,^ErrorLog .*$,ErrorLog syslog,' conf/cups-files.conf.in
+sed -i -e 's,^AccessLog .*$,AccessLog syslog,' conf/cups-files.conf.in
+sed -i -e 's,^PageLog .*,PageLog syslog,' conf/cups-files.conf.in
 
 # Let's look at the compilation command lines.
 perl -pi -e "s,^.SILENT:,," Makedefs.in
@@ -264,18 +221,19 @@ export CFLAGS="$RPM_OPT_FLAGS -fstack-protector-all -DLDAP_DEPRECATED=1"
 %if %{lspp}
 	--enable-lspp \
 %endif
-	--with-exe-file-perm=0755 \
-	--with-cupsd-file-perm=0755 \
-	--with-log-file-perm=0600 \
 	--enable-relro \
+	--enable-sync-on-close \
+	--with-cupsd-file-perm=0755 \
 	--with-dbusdir=%{_sysconfdir}/dbus-1 \
-	--enable-threads \
-	--enable-gnutls \
-	--with-rundir=/run/cups \
+	--with-exe-file-perm=0755 \
+	--with-log-file-perm=0600 \
+	--with-pkgconfpath=%{_libdir}/pkgconfig \
+	--with-rundir=%{_rundir}/cups \
+	--with-tls=gnutls \
 	localedir=%{_datadir}/locale
 
 # If we got this far, all prerequisite libraries must be here.
-make %{?_smp_mflags}
+%make_build
 
 %install
 make BUILDROOT=%{buildroot} install
@@ -286,6 +244,13 @@ rm -rf	%{buildroot}%{_initddir} \
 mkdir -p %{buildroot}%{_unitdir}
 
 find %{buildroot}%{_datadir}/cups/model -name "*.ppd" |xargs gzip -n9f
+
+pushd %{buildroot}%{_datadir}/%{name}/ipptool
+for file in color.jpg document-a4.pdf document-a4.ps document-letter.pdf document-letter.ps gray.jpg onepage-a4.pdf onepage-a4.ps onepage-letter.pdf onepage-letter.ps testfile.jpg testfile.pcl testfile.pdf testfile.ps testfile.txt
+do
+  mv $file{,.gz}
+done
+popd
 
 %if %{use_alternatives}
 pushd %{buildroot}%{_bindir}
@@ -303,21 +268,12 @@ mv lpc.8 lpc-cups.8
 popd
 %endif
 
-mv %{buildroot}%{_unitdir}/org.cups.cupsd.path %{buildroot}%{_unitdir}/cups.path
-mv %{buildroot}%{_unitdir}/org.cups.cupsd.service %{buildroot}%{_unitdir}/cups.service
-mv %{buildroot}%{_unitdir}/org.cups.cupsd.socket %{buildroot}%{_unitdir}/cups.socket
-mv %{buildroot}%{_unitdir}/org.cups.cups-lpd.socket %{buildroot}%{_unitdir}/cups-lpd.socket
-mv %{buildroot}%{_unitdir}/org.cups.cups-lpd@.service %{buildroot}%{_unitdir}/cups-lpd@.service
-/bin/sed -i -e "s,org.cups.cupsd,cups,g" %{buildroot}%{_unitdir}/cups.service
-
-mkdir -p %{buildroot}%{_datadir}/pixmaps %{buildroot}%{_sysconfdir}/X11/sysconfig %{buildroot}%{_sysconfdir}/X11/applnk/System %{buildroot}%{_sysconfdir}/logrotate.d
+mkdir -p %{buildroot}%{_datadir}/pixmaps %{buildroot}%{_sysconfdir}/X11/sysconfig %{buildroot}%{_sysconfdir}/X11/applnk/System
 install -c -m 644 %{SOURCE1} %{buildroot}%{_datadir}/pixmaps
-install -c -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/cups
-install -c -m 755 %{SOURCE3} %{buildroot}%{cups_serverbin}/backend/ncp
 
 # Ship an rpm macro for where to put driver executables.
 mkdir -p %{buildroot}%{_sysconfdir}/rpm/
-install -m 0644 %{SOURCE4} %{buildroot}%{_sysconfdir}/rpm/
+install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/rpm/
 
 # Ship a printers.conf file, and a client.conf file.  That way, they get
 # their SELinux file contexts set correctly.
@@ -460,10 +416,11 @@ rm -f %{cups_serverbin}/backend/smb
 %dir %attr(0755,root,lp) %{_sysconfdir}/cups/ppd
 %dir %attr(0700,root,lp) %{_sysconfdir}/cups/ssl
 %config(noreplace) %{_sysconfdir}/pam.d/cups
-%config(noreplace) %{_sysconfdir}/logrotate.d/cups
 %dir %{_datadir}/%{name}/www
+%dir %{_datadir}/%{name}/www/da
 %dir %{_datadir}/%{name}/www/de
 %dir %{_datadir}/%{name}/www/es
+%dir %{_datadir}/%{name}/www/fr
 %dir %{_datadir}/%{name}/www/ja
 %dir %{_datadir}/%{name}/www/ru
 %{_datadir}/%{name}/www/images
@@ -471,8 +428,10 @@ rm -f %{cups_serverbin}/backend/smb
 %{_datadir}/%{name}/www/index.html
 %{_datadir}/%{name}/www/help
 %{_datadir}/%{name}/www/robots.txt
+%{_datadir}/%{name}/www/da/index.html
 %{_datadir}/%{name}/www/de/index.html
 %{_datadir}/%{name}/www/es/index.html
+%{_datadir}/%{name}/www/fr/index.html
 %{_datadir}/%{name}/www/ja/index.html
 %{_datadir}/%{name}/www/ru/index.html
 %{_datadir}/%{name}/www/pt_BR/index.html
@@ -507,12 +466,14 @@ rm -f %{cups_serverbin}/backend/smb
 %exclude %{_mandir}/man8/cups-lpd.8.gz
 %{_sbindir}/*
 %dir %{_datadir}/cups/templates
+%dir %{_datadir}/cups/templates/da
 %dir %{_datadir}/cups/templates/de
 %dir %{_datadir}/cups/templates/es
 %dir %{_datadir}/cups/templates/ja
 %dir %{_datadir}/cups/templates/ru
 %dir %{_datadir}/cups/templates/pt_BR
 %{_datadir}/cups/templates/*.tmpl
+%{_datadir}/cups/templates/da/*.tmpl
 %{_datadir}/cups/templates/de/*.tmpl
 %{_datadir}/cups/templates/fr/*.tmpl
 %{_datadir}/cups/templates/es/*.tmpl
@@ -546,6 +507,7 @@ rm -f %{cups_serverbin}/backend/smb
 %files devel
 %{_bindir}/cups-config
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
 %{_includedir}/cups
 %{_mandir}/man1/cups-config.1*
 %{_sysconfdir}/rpm/macros.cups
