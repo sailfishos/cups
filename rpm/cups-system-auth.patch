@@ -16,7 +16,7 @@ diff -up cups-1.5b1/conf/cups.system-auth.system-auth cups-1.5b1/conf/cups.syste
 diff -up cups-1.5b1/conf/Makefile.system-auth cups-1.5b1/conf/Makefile
 --- cups-1.5b1/conf/Makefile.system-auth	2011-05-12 07:21:56.000000000 +0200
 +++ cups-1.5b1/conf/Makefile	2011-05-23 17:27:27.000000000 +0200
-@@ -90,10 +90,16 @@ install-data:
+@@ -84,10 +84,16 @@ install-data:
  	done
  	-if test x$(PAMDIR) != x; then \
  		$(INSTALL_DIR) -m 755 $(BUILDROOT)$(PAMDIR); \
