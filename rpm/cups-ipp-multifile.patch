@@ -1,7 +1,7 @@
 diff -up cups-1.7.0/backend/ipp.c.ipp-multifile cups-1.7.0/backend/ipp.c
 --- cups-1.7.0/backend/ipp.c.ipp-multifile	2013-10-24 15:52:00.745814354 +0100
 +++ cups-1.7.0/backend/ipp.c	2013-10-24 15:53:46.463266724 +0100
-@@ -1758,7 +1758,10 @@ main(int  argc,				/* I - Number of comm
+@@ -1813,7 +1813,10 @@ main(int  argc,				/* I - Number of comm
  	ippAddBoolean(request, IPP_TAG_OPERATION, "last-document",
          	      (i + 1) >= num_files);
  

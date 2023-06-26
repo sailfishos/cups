@@ -1,7 +1,7 @@
 diff -up cups-1.5b1/backend/usb-unix.c.uri-compat cups-1.5b1/backend/usb-unix.c
 --- cups-1.5b1/backend/usb-unix.c.uri-compat	2011-05-24 15:59:05.000000000 +0200
 +++ cups-1.5b1/backend/usb-unix.c	2011-05-24 16:02:03.000000000 +0200
-@@ -63,11 +63,34 @@ print_device(const char *uri,		/* I - De
+@@ -49,11 +49,34 @@ print_device(const char *uri,		/* I - De
    int		device_fd;		/* USB device */
    ssize_t	tbytes;			/* Total number of bytes written */
    struct termios opts;			/* Parallel port options */
@@ -36,7 +36,7 @@ diff -up cups-1.5b1/backend/usb-unix.c.uri-compat cups-1.5b1/backend/usb-unix.c
   /*
    * Open the USB port device...
    */
-@@ -107,10 +130,10 @@ print_device(const char *uri,		/* I - De
+@@ -93,10 +116,10 @@ print_device(const char *uri,		/* I - De
               _cups_strncasecmp(hostname, "Minolta", 7);
  #endif /* __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __DragonFly__ */
  
