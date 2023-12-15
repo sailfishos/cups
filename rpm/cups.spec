@@ -9,7 +9,7 @@
 
 Summary: Common Unix Printing System
 Name: cups
-Version: 2.4.6
+Version: 2.4.7
 Release: 1
 License: ASL 2.0 with exceptions for GPL2/LGPL2
 Url: https://github.com/sailfishos/cups
