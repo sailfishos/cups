@@ -107,7 +107,6 @@ Requires: /usr/sbin/alternatives
 Summary: Common Unix Printing System - development environment
 License: LGPLv2
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: openssl-devel
 Requires: zlib-devel
 Provides: cupsddk-devel
 
