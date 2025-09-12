@@ -9,7 +9,7 @@
 
 Summary: Common Unix Printing System
 Name: cups
-Version: 2.4.10
+Version: 2.4.14
 Release: 1
 License: ASL 2.0 with exceptions for GPL2/LGPL2
 Url: https://github.com/sailfishos/cups
@@ -64,7 +64,7 @@ Patch100: cups-lspp.patch
 
 
 BuildRequires: pam-devel
-BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(openssl)
 BuildRequires: libacl-devel
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libsystemd)
@@ -107,7 +107,7 @@ Requires: /usr/sbin/alternatives
 Summary: Common Unix Printing System - development environment
 License: LGPLv2
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: gnutls-devel
+Requires: openssl-devel
 Requires: zlib-devel
 Provides: cupsddk-devel
 
@@ -229,7 +229,8 @@ export CFLAGS="$RPM_OPT_FLAGS -fstack-protector-all -DLDAP_DEPRECATED=1"
 	--with-log-file-perm=0600 \
 	--with-pkgconfpath=%{_libdir}/pkgconfig \
 	--with-rundir=%{_rundir}/cups \
-	--with-tls=gnutls \
+	--with-tls=openssl \
+	--with-xinetd=no \
 	localedir=%{_datadir}/locale
 
 # If we got this far, all prerequisite libraries must be here.
@@ -439,6 +440,7 @@ rm -f %{cups_serverbin}/backend/smb
 %dir %{_datadir}/%{name}/usb
 %{_datadir}/%{name}/usb/org.cups.usb-quirks
 %{_unitdir}/%{name}.service
+%{_unitdir}/system-%{name}.slice
 %{_unitdir}/%{name}.socket
 %{_unitdir}/%{name}.path
 %{_bindir}/cupstestppd
