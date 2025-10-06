@@ -163,38 +163,11 @@ to CUPS daemon. This solution will substitute printer drivers and raw queues in 
 
 %prep
 %setup -q -n %{name}-%{version}/%{name}
-# Use the system pam configuration.
-%patch1 -p1 -b .system-auth
-# Prevent multilib conflict in cups-config script.
-%patch2 -p1 -b .multilib
-# Ignore rpm save/new files in the banners directory.
-%patch3 -p1 -b .banners
-# Don't export SSLLIBS to cups-config.
-%patch4 -p1 -b .no-export-ssllibs
-# Allow file-based usb device URIs.
-%patch5 -p1 -b .direct-usb
-# Increase driverd timeout to 70s to accommodate foomatic (bug #744715).
-%patch6 -p1 -b .driverd-timeout
-# Support for errno==ENOSPACE-based USB paper-out reporting.
-%patch7 -p1 -b .usb-paperout
-# Allow the usb backend to understand old-style URI formats.
-%patch8 -p1 -b .uri-compat
-# Use IP_FREEBIND socket option when binding listening sockets (bug #970809).
-%patch9 -p1 -b .freebind
-# Fixes for jobs with multiple files and multiple formats.
-%patch10 -p1 -b .ipp-multifile
-# Increase web interface get-devices timeout to 10s (bug #996664).
-%patch11 -p1 -b .web-devices-timeout
-# Add failover backend (bug #1689209)
-%patch12 -p1 -b .failover
-# Added IEEE 1284 Device ID for a Dymo device (bug #747866).
-%patch13 -p1 -b .dymo-deviceid
-# Revert Use iterator for CRL Issue 5532
-%patch14 -p1 -b .Revert-Use-iterator-for-CRL-Issue-5532.patch
+
+%autopatch -m 1 -M 99 -p1
 
 %if %{lspp}
-# LSPP support.
-%patch100 -p1 -b .lspp
+%autopatch -m 100 -p1
 %endif
 
 # Log to the system journal by default (bug #1078781, bug #1519331).
